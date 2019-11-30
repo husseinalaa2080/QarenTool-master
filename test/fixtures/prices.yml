@@ -1,0 +1,23 @@
+# == Schema Information
+#
+# Table name: prices
+#
+#  id         :bigint           not null, primary key
+#  market_id  :bigint
+#  product_id :bigint
+#  price      :decimal(12, 2)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  market: one
+  product: one
+  price: 9.99
+
+two:
+  market: two
+  product: two
+  price: 9.99

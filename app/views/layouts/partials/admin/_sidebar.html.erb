@@ -1,0 +1,12 @@
+<nav id="sidebar" class="bg-dark text-light">
+    <div class="sidebar-header pt-3">
+        <h3 class="navbar-brand top-brand text-success text-center m-auto pt-3">
+            <%# t ".app_title" %>
+        </h3>
+        <%= image_tag 'user/logo.png', class: 'navbar-brand top-brand' %>
+        <strong class="navbar-brand text-success text-center mx-auto"><%= t ".app_title_short" %></strong>
+    </div>
+    <p class="text-secondary p<%= is_ar ? 'r' : 'l' %>-3 pt-3"><%= t ".dashboard" %></p>
+    <div class="divider"></div>
+    <%= render partial: 'layouts/partials/admin/navigation/list' %>
+</nav>

@@ -1,0 +1,73 @@
+<%= form_with(model: product, url: edit ? admin_product_path(product) : admin_products_path, local: true, class: 'two-thirds-width') do |form| %>
+  <% if product.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+      <ul>
+      <% product.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group row">
+    <%= form.label :name, class: 'col-md-2 text-center' %>
+    <%= form.text_field :name, class: 'form-control col-md-6' %>
+  </div>
+
+  <div class="form-group row">
+    <%= form.label :name_en, class: 'col-md-2 text-center' %>
+    <%= form.text_field :name_en, class: 'form-control col-md-6' %>
+  </div>
+
+  <div class="form-group row">
+    <%= form.label :description, class: 'col-md-2 text-center' %>
+    <%= form.text_area :description, class: 'form-control col-md-6' %>
+  </div>
+
+  <div class="form-group row">
+    <%= form.label :main_image, class: 'col-md-2 text-center' %>
+    <%= form.text_field :main_image, class: 'form-control col-md-6' %>
+  </div>
+
+  <div class="form-group row">
+    <%= form.label :category_id, class: 'col-md-2 text-center' %>
+    <%= collection_select(:product, :category_id, Category.all, :id, is_ar ? :name : "name_#{@lang}".to_sym, {include_blank: "#{Category.all.empty? ? 'Please add category' : 'Please choose'}"}, {:class=>'form-control col-md-6'}) %>
+    <%# form.text_field :category_id %>
+  </div>
+
+  <%# Market prices %>
+  <div class="divider"></div>
+  <br>
+  <div class="text-center row text-secondary">
+    <p class="col-2"><%= t ".prices" %></p>
+  </div>
+  <br>
+  <% @markets.each do |market| %>
+    <div class="form-group row">
+      <%= form.label market.lang_name, for: "product_#{market.id}", class: 'col-md-2 text-center' %>
+      <%= form.number_field "market_price[#{market.id}]", id: market.id, min: 1, value: product.get_price(market.id), class: 'form-control col-md-2', step: :any %>
+    </div>
+    <div class="form-group row">
+      <%= form.label t('.url_for', market: market.lang_name), for: "product_#{market.id}", class: 'col-md-2 text-center' %>
+      <%= form.text_field(
+        "market_url[#{market.id}]",
+        id: "url_#{market.id}",
+        min: 1,
+        value: product.get_url(market.id),
+        placeholder: 'www.example.com/product_url',
+        class: 'form-control col-md-6') %>
+    </div>
+  <% end %>
+
+  <div class="actions form-group text-center">
+    <%= form.submit class: 'btn btn-info' %>
+  </div>
+<% end %>
+
+<script>
+  $(document).ready(function() {
+      $('select').select2();
+  });
+</script>

@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-sm navbar-light bg-light fixed-top">
+    <button type="button" class="btn btn-outline-success cart-btn m<%= is_ar ? 'l' : 'r' %>-auto" data-toggle="modal" data-target="#cart" onclick= "ga('send', 'event', 'Cart', 'CartClick');">
+        <i class="fas fa-shopping-cart fa-lg pt-2"></i>
+        <span id="cart_badge">
+            <%= render 'user/pages/cart/cart_badge', count: @products_count %>
+        </span>
+    </button>
+ 
+    <button type="button" class="btn btn-outline-success cart-btn m<%= is_ar ? 'l' : 'r' %>-auto" data-toggle="modal" data-target="#cart" onclick= "ga('send', 'event', 'Cart', 'CartClick');"
+    style="margin: 15px;">
+    
+    <i class="fas fa-user-circle fa-lg pt-2"></i>
+    <span id="cart_badge">
+        <%= render 'user/pages/cart/cart_badge', count: @products_count %>
+    </span>
+</button>
+
+    <div class="container text-center mx-auto">
+        <%= link_to image_tag('user/logo.png', class: 'logo'), root_path, class: "navbar-brand text-success mx-auto" %>
+    </div>
+
+    <ul class="navbar-nav m<%= is_ar ? 'r' : 'l' %>-auto">
+        <li class="nav-item dropdown">
+            <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             
+                <i class="fas fa-globe fa-lg text-dark" style="color: #27a745 !important;font-size: 34px;"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-<%= is_ar ? 'left' : 'right' %>" aria-labelledby="navbarDropdown">
+                <%= link_to 'عربي', url_for(locale: :ar), class: "dropdown-item text-center #{'disabled' if @lang == 'ar'}" %>
+                <div class="dropdown-divider"></div>
+                <%= link_to 'English', url_for(locale: :en), class: "dropdown-item text-center #{'disabled' if @lang == 'en'}" %>
+            </div>
+        </li>
+    </ul>
+
+</nav>

@@ -1,0 +1,396 @@
+# To use the locales, use `I18n.t`:
+#     I18n.t 'hello'
+# In views, this is aliased to just `t`:
+#     <%= t('hello') %>
+# To use a different locale, set it with `I18n.locale`:
+#     I18n.locale = :es
+# This would use the information in config/locales/es.yml.
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+# true, false, on, off, yes, no
+# Instead, surround them with single quotes.
+# en:
+#   'true': 'foo'
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  # Numbers and currencies
+  number:
+    currency:
+      format:
+        unit: 'SAR'
+        delimiter: ','
+        separator: '.'
+        precision: 2
+        format: '%u %n'
+  # Shared (& means can be used as variable)
+  dictionary:
+    app_title: &app_title QAREN
+    email: &email Email Address
+    name: &name Name
+    password: &password Password
+    confirmation: &confirmation Confirmation
+    new_market: &new_market New Market
+    new_category: &new_category New Category
+    new_product: &new_product New Product
+    upload_products: &upload_products Upload Products Sheet
+    operations: &operations Operations
+    name: &arabic_name Arabic Name
+    name_en: &english_name English Name
+    description: &description Description
+    logo: &logo Logo
+    active: &status Status
+    is_active: &active_status Active
+    inactive: &inactive_status Inactive
+    main_image: &main_image Main Image
+    sheet_name: &sheet_name Column name in CSV Sheet
+    sheet_url_name: &sheet_url_name URL Column Name in Sheet
+    name_in_file: &name_in_file Name in CSV sheet
+    all: &all All
+    search: &search Search
+    id: &id ID
+    generate_invoice: &generate_invoice Generate Invoice
+    view: &view View
+    filter: &filter Filter
+    confirmation: &confirmation Order Process
+    is_confirmed: &is_confirmed Confirmed
+    not_confirmed: &not_confirmed Not Confirmed
+
+
+  views:
+    pagination:
+      first: "&laquo; First"
+      last: "Last &raquo;"
+      previous: "&lsaquo; Prev"
+      next: "Next &rsaquo;"
+      truncate: "&hellip;"
+  helpers:
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: "No %{entry_name} found"
+          one: "Displaying <b>1</b> %{entry_name}"
+          other: "Displaying <b>all %{count}</b> %{entry_name}"
+      more_pages:
+        display_entries: "Displaying %{entry_name} <b>%{first}&nbsp;-&nbsp;%{last}</b> of <b>%{total}</b> in total"
+    label:
+      product:
+        category_id: Category
+    submit:
+      create: Create %{model}
+      update: Update %{model}
+
+
+  # Models and Attributes
+  activerecord:
+    models:
+      market:
+        one: Market
+        other: Markets
+      category:
+        one: Category
+        other: Categories
+      product:
+        one: Product
+        other: Products
+      user:
+        one: User
+        other: Users
+      order:
+        one: Order
+        other: Orders
+    attributes:
+      market:
+        name: *arabic_name
+        name_en: *english_name
+        description: *description
+        logo: *logo
+        active: *status
+        sheet_name: *sheet_name
+        sheet_url_name: *sheet_url_name
+      category:
+        icon: Icon
+        name: *arabic_name
+        name_en: *english_name
+        description: *description
+        name_in_file: *name_in_file
+      product:
+        name: *arabic_name
+        name_en: *english_name
+        description: *description
+        main_image: *main_image
+      user:
+        name: Customer Name
+        mobile: Phone Number
+        email: Email Address
+        visits_count: Visits Count
+        last_visit: Last Visit
+
+
+  layouts:
+    partials:
+      admin:
+        header:
+          logout: Logout
+        sidebar:
+          app_title: *app_title
+          app_title_short: Q
+          dashboard: Admin Dashboard
+        # Sidebar Links
+        navigation:
+          list:
+            home: Home
+          items:
+            market:
+              markets: Markets
+              view_markets: View Markets
+              new_market: *new_market
+            category:
+              categories: Categories
+              view_categories: View Categories
+              new_category: *new_category
+            product:
+              products: Products
+              view_products: View Products
+              new_product: *new_product
+              upload_products: *upload_products
+            users:
+              users: Users
+              view_users: View Users
+            order:
+              orders: Orders
+              view_orders: View Orders
+            settings:
+              settings: Settings
+      user:
+        nav:
+          app_title: *app_title
+
+
+  # Admin Views
+  admin:
+    markets:
+      form:
+        is_active: *active_status
+        inactive: *active_status
+      index:
+        actions: *operations
+        new_market: *new_market
+        is_active: *active_status
+        inactive: *inactive_status
+      new:
+        title: *new_market
+      edit:
+        title: Edit Market
+      show:
+        title: View Market
+        is_active: *active_status
+        inactive: *inactive_status
+    categories:
+      index:
+        actions: *operations
+        new_category: *new_category
+      new:
+        title: *new_category
+      edit:
+        title: Edit Category
+      show:
+        title: View Category
+        icon: Icon
+    products:
+      form:
+        prices: Prices
+        url_for: Product URL in %{market}
+      show:
+        title: View Product
+        prices: Prices
+        id: *id
+        not_set: Not Set
+      index:
+        actions: *operations
+        new_product: *new_product
+      filter:
+        filter: *filter
+        product_name: Product Name
+        category: Category
+        all: *all
+        submit: Submit
+        clear: Clear
+      new:
+        title: *new_product
+      edit:
+        title: Edit Product
+      new_upload:
+        title: *upload_products
+        upload: Upload Sheet
+        choose_file: Choose File ...
+    users:
+      index:
+        title: Users
+        actions: *operations
+        orders_count: Orders Count
+      show:
+        title: View User
+        user_orders: Show user orders
+      edit:
+        title: Edit User
+    orders:
+      index:
+        all_orders: All Orders
+        order_number: Order Number
+        confirmed: *confirmation
+        is_confirmed: *is_confirmed
+        not_confirmed: *not_confirmed
+        actions: *operations
+        view: *view
+        generate_invoice: *generate_invoice
+        ordered_at: Ordered At
+      filter:
+        filter: *filter
+        all: *all
+        confirmation: *confirmation
+        is_confirmed: *is_confirmed
+        not_confirmed: *not_confirmed
+        customer_phone: Customer Phone Number
+        user_id: User ID
+        submit: Submit
+        clear: Clear
+      show:
+        title: View Order
+        order_info: Order Details
+        prices_info: Prices Details
+        user_info: User Details
+        generate_invoice: *generate_invoice
+        view_invoice: View Invoice
+        no_products: No Products in This order
+        delete_order: Delete Order
+        delete_confirmation: Are you sure?
+      order_details:
+        id: *id
+        created_at: Cart Created At
+        ordered_at: Ordered At
+        confirmed_at: Invoice Created At
+        confirmed_by: Invoice Created By
+        not_confirmed: Not Confirmed Yet
+        quantity: Quantity
+        order_products: Order Products
+        order_times: Order Times
+        order_prices: Order Prices
+        image: Image
+        total_products: Total Products
+        total_quantity: Total Quantities
+        no_products: No Products, looks like it has been deleted
+      prices_details:
+        total: Total
+        quantity: Quantity
+        saving_amount: Saving Amount
+        no_products: No Products Found
+      user_details:
+        id: *id
+        name: Name
+        phone: Phone Number
+        email: *email
+        no_email: No Entry
+        order_count: Total Order Count
+        joined_at: Joined At
+        last_visit: Last Visit
+        unknown: Unknown
+      view_invoice:
+        customer_name: Customer Name
+        customer_phone: Phone Number
+        customer_email: Email Address
+        order_code: Order Code
+        ordered_at: Ordered At
+        price_list: Price List
+        generated_at: Generated At
+        note: Note
+        note_info: Prices might vary depending on the city and the branch, these prices are taken from the average stores in Riyadh
+        rights: All rights reserved, Qaren Services
+    settings:
+      index:
+        title: Settings
+        allow_registration: Allow Registration
+        show_lowest_price: Show Lowest Price
+        show_saving_percentage: Show Saving Percentage
+        count_visit_every: Count Visits Every
+        hour: Hour(s)
+        update: Update
+
+
+  # User Views
+  user:
+    pages:
+      home:
+        email: *email
+        all: *all
+        search: *search
+        no_items: No Items Found
+        available_products: Available Products
+      products:
+        add_to_cart: Add To Cart
+        unit_price: Lowest Price / Unit
+        saving_percent: Saving Percentage
+      cart:
+        empty_cart:
+          empty_cart: Your cart is empty
+        cart:
+          title: Cart
+          checkout: Generate Qaren Report
+          close: Close
+          user_name: Your name (optional)
+          mobile_note: The details will be sent to this number via Whatsapp
+          user_phone: "Your phone number (e.g. 05xxxxxxxx)"
+          user_email: Your email address (optional)
+  # invoice
+      order_details:
+        id: *id
+        created_at: Cart Created At
+        ordered_at: Ordered At
+        confirmed_at: Invoice Created At
+        confirmed_by: Invoice Created By
+        not_confirmed: Not Confirmed Yet
+        quantity: Quantity
+        order_products: Order Products
+        order_times: Order Times
+        order_prices: Order Prices
+        image: Image
+        total_products: Total Products
+        total_quantity: Total Quantities
+        no_products: No Products, looks like it has been deleted
+      prices_details:
+        total: Total
+        quantity: Quantity
+        saving_amount: Saving Amount
+        no_products: No Products Found
+      user_details:
+        id: *id
+        name: Name
+        phone: Phone Number
+        email: *email
+        no_email: No Entry
+        order_count: Total Order Count
+        joined_at: Joined At
+      view_invoice:
+        customer_name: Customer Name
+        customer_phone: Phone Number
+        customer_email: Email Address
+        order_code: Order Code
+        ordered_at: Ordered At
+        price_list: Price List
+        generated_at: Generated At
+        note: Note
+        note_info: Prices might vary depending on the city and the branch, these prices are taken from the average stores in Riyadh
+        rights: All rights reserved, Qaren Services
+
+  # sessions:
+  #   new:
+  #     email: *email
+  #     password: *password
+  errors:
+    invalid_phone: "Invalid Phone Number"
+    empty_cart: "Your Cart is Empty"
+    routes:
+      no_match: "You used an incorrect path, we couldn't find a route that matches"
+  messages:
+    checkedout: "Your request has been recieved, look out for a Whatsapp message containing the details"

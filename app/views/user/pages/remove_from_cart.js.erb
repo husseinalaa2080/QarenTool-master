@@ -1,0 +1,5 @@
+$("#cart_item_<%= @current_product.id %>").remove();
+$("#cart_badge").html('<%= render 'user/pages/cart/cart_badge', count: @products_count %>');
+<% if @products_count == 0 %>
+    $('#cart_list').append(`<%= render partial: 'user/pages/cart/empty_cart' %>`);
+<% end %>

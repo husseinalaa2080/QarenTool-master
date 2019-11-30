@@ -1,0 +1,14 @@
+<%= link_to url_for(admin_categories_path), class: 'text-secondary' do %>
+  <i class="fa fa-2x fa-arrow-circle-<%= is_ar ? 'right' : 'left' %>"></i>
+<% end %>
+<br>
+<br>
+<div class="row align-items-center">
+    <h2 class=""><%= t ".title" %></h2>
+    <%= link_to url_for(admin_category_path(@category)), class: 'col text-info' do %>
+        <i class="fa fa-eye"></i>
+    <% end %>
+</div>
+<div class="divider"></div>
+<%= image_tag @category.icon, class: 'category-icon mb-3' if @category.icon && !@category.icon.empty? %>
+<%= render 'form', category: @category, edit: true %>

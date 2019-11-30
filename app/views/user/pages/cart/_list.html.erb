@@ -1,0 +1,6 @@
+<ul id="cart_list" class="list-group">
+    <%= render partial: 'user/pages/cart/empty_cart' if cart_items.size == 0 %>
+    <% cart_items.each do |item| %>
+        <%= render 'user/pages/cart/item', item: item %>
+    <% end %>
+</ul>

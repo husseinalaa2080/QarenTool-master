@@ -1,0 +1,39 @@
+<h2><%= t ".title" %></h2>
+<div class="divider"></div>
+<br>
+
+<%= form_with url: admin_change_settings_path, local: true do |f| %>
+    <ul class="list-group third-width">
+        <li class="list-group-item mb-3">
+            <div class="form-check">
+                <%= f.label t(".allow_registration"), class: 'form-check-label pointer', for: 'allow_registration' %>
+                <% check = @allow_admin_registration ? true : false %>
+                <%= f.check_box :allow_registration, class: 'form-check-input mx-3 pointer', checked: check %>
+            </div>
+        </li>
+        <li class="list-group-item mb-3">
+            <div class="form-check">
+                <%= f.label t(".show_lowest_price"), class: 'form-check-label pointer', for: 'show_lowest_price' %>
+                <% check = @show_lowest_price ? true : false %>
+                <%= f.check_box :show_lowest_price, class: 'form-check-input mx-3 pointer', checked: check %>
+            </div>
+        </li>
+        <li class="list-group-item mb-3">
+            <div class="form-check">
+                <%= f.label t(".show_saving_percentage"), class: 'form-check-label pointer', for: 'show_saving_percentage' %>
+                <% check = @show_saving_percentage ? true : false %>
+                <%= f.check_box :show_saving_percentage, class: 'form-check-input mx-3 pointer', checked: check %>
+            </div>
+        </li>
+        <li class="list-group-item mb-3">
+            <div class="row align-items-center">
+                <%= f.label t(".count_visit_every"), class: 'col-4 pointer', for: 'visit_timer' %>
+                <%= f.number_field :visit_timer, class: 'form-control form-control-sm col-2 text-center', value: @visit_timer ? @visit_timer : '', step: :any %>
+                <span class="text-muted col"><%= t ".hour" %></span>
+            </div>
+        </li>
+        <div class="form-group mt-3">
+            <%= f.submit t(".update"), class: "btn btn-outline-info" %>
+        </div>
+    </ul>
+<% end %>

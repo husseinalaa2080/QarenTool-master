@@ -1,0 +1,52 @@
+<%= form_with(model: market, url: edit ? admin_market_path(market) : admin_markets_path, local: true, class: 'two-thirds-width') do |form| %>
+  <% if market.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(market.errors.count, "error") %> prohibited this market from being saved:</h2>
+
+      <ul>
+      <% market.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group row">
+    <%= form.label :name, class: 'col-md-2 text-center' %>
+    <%= form.text_field :name, class: 'form-control col-md-6' %>
+  </div>
+
+  <div class="form-group row">
+    <%= form.label :name_en, class: 'col-md-2 text-center' %>
+    <%= form.text_field :name_en, class: 'form-control col-md-6' %>
+  </div>
+  
+  <div class="form-group row">
+    <%= form.label :sheet_name, class: 'col-md-2 text-center' %>
+    <%= form.text_field :sheet_name, class: 'form-control col-md-6' %>
+  </div>
+
+  <div class="form-group row">
+    <%= form.label :sheet_url_name, class: 'col-md-2 text-center' %>
+    <%= form.text_field :sheet_url_name, class: 'form-control col-md-6' %>
+  </div>
+
+  <div class="form-group row">
+    <%= form.label :description, class: 'col-md-2 text-center' %>
+    <%= form.text_area :description, class: 'form-control col-md-6' %>
+  </div>
+
+  <div class="form-group row">
+    <%= form.label :logo, class: 'col-md-2 text-center' %>
+    <%= form.text_field :logo, class: 'form-control col-md-6' %>
+  </div>
+  <div class="form-group row">
+    <%= form.label :active, class: 'col-md-2 text-center' %>
+      <%= form.check_box :active, class: 'col-md-1 form-control form-control-sm justify-self-start' %>
+      <p class="form-text col d-inline text-<%= market.active ? 'success' : 'danger' %>"><%= t(market.active ? '.is_active' : '.inactive') %></p>
+  </div>
+  <br>
+  <div class="actions form-group text-center col-md-6">
+    <%= form.submit class: 'btn btn-info' %>
+  </div>
+<% end %>

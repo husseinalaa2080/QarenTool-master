@@ -1,0 +1,14 @@
+<%= link_to url_for(admin_markets_path), class: 'text-secondary' do %>
+  <i class="fa fa-2x fa-arrow-circle-<%= is_ar ? 'right' : 'left' %>"></i>
+<% end %>
+<br>
+<br>
+<div class="row align-items-center">
+    <h2 class=""><%= t ".title" %></h2>
+    <%= link_to url_for(admin_market_path(@market)), class: 'col text-info' do %>
+        <i class="fa fa-eye"></i>
+    <% end %>
+</div>
+<div class="divider"></div>
+<%= render 'form', market: @market, edit: true %>
+

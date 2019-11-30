@@ -1,0 +1,17 @@
+<%= link_to url_for(admin_products_path), class: 'text-secondary' do %>
+    <i class="fa fa-2x fa-arrow-circle-<%= is_ar ? 'right' : 'left' %>"></i>
+<% end %>
+<br>
+<br>
+<h2><%= t ".title" %></h2>
+<div class="divider"></div>
+
+<%= form_with(url: admin_upload_products_path, local: true, class: 'two-thirds-width row', multipart: true) do |form| %>
+    <div class="form-group col-md-8">
+        <input type="file" class="form-control" id="uploadSheet" name="sheet" required>
+    </div>
+
+    <div class="actions form-group text-center col-md-4">
+        <%= form.submit t(".upload"), class: 'btn btn-info' %>
+    </div>
+<% end %>

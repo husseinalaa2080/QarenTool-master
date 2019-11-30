@@ -1,0 +1,15 @@
+<li class="<%= 'active' if @current_path.include?('markets') %>">
+    <a href="#marketSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle in">
+        <%= t ".markets" %>
+    </a>
+    <ul class="collapse list-unstyled <%= 'show' if @current_path.include?('markets') %>" id="marketSubmenu">
+        <li>
+            <% active_class = @current_path.last == 'markets' ? 'text-light bg-secondary' : '' %>
+            <%= link_to t('.view_markets'), admin_markets_path, class: active_class %>
+        </li>
+        <li>
+            <% active_class = @current_path.include?('new') && @current_path.include?('markets') ? 'text-light bg-secondary' : '' %>
+            <%= link_to t('.new_market'), new_admin_market_path, class: active_class %>
+        </li>
+    </ul>
+</li>

@@ -1,0 +1,67 @@
+<%= link_to url_for(admin_products_path), class: 'text-secondary' do %>
+  <i class="fa fa-2x fa-arrow-circle-<%= is_ar ? 'right' : 'left' %>"></i>
+<% end %>
+<br>
+<br>
+<div class="row align-items-center">
+    <h2 class=""><%= t ".title" %></h2>
+    <%= link_to url_for(edit_admin_product_path(@product)), class: 'col text-secondary' do %>
+        <i class="fa fa-edit"></i>
+    <% end %>
+</div>
+<div class="divider"></div>
+
+<%= image_tag @product.main_image, class: 'product-image' if @product.main_image && !@product.main_image.empty? %>
+<br>
+<br>
+
+<p>
+  <strong><%= t ".id" %>:</strong>
+  <%= @product.id %>
+</p>
+<p>
+  <strong><%= Product.human_attribute_name("name") %>:</strong>
+  <%= @product.name %>
+</p>
+
+<p>
+  <strong><%= Product.human_attribute_name("name_en") %>:</strong>
+  <%= @product.name_en %>
+</p>
+
+<p>
+  <strong><%= Product.human_attribute_name("description") %>:</strong>
+  <%= @product.description %>
+</p>
+
+<p>
+  <strong><%= Category.model_name.human %>:</strong>
+  <%= @product.category.lang_name if @product.category %>
+</p>
+<div class="divider"></div>
+<h4 class="mt-5"><%= t ".prices" %></h4>
+<table class="table table-hover table-bordered text-center col-md-10 mx-auto">
+  <thead>
+    <% @product.informations.order_by_market_name.each do |item_price| %>
+      <th>
+        <%= link_to admin_market_path(item_price.market.id), class: "underline #{item_price.market.active ? 'text-dark' : 'text-secondary line-through'}" do %>
+          <i class="far fa-share-square"></i>
+          <%= item_price.market.lang_name %>
+        <% end %>
+      </th>
+    <% end %>
+  </thead>
+  <tbody>
+    <% @product.informations.order_by_market_name.each_with_index do |item_price, i| %>
+      <td>
+        <% if item_price.market_url %>
+          <%= link_to "#{item_price.market_url if item_price.market_url}", target: "_blank" do %>
+            <%= item_price.price ? number_to_currency(item_price.price, locale: @lang) : t(".not_set") %>
+          <% end %>
+        <% else %>
+            <%= item_price.price ? number_to_currency(item_price.price, locale: @lang) : t(".not_set") %>
+        <% end %>
+      </td>
+    <% end %>
+  </tbody>
+</table>

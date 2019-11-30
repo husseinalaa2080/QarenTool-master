@@ -1,0 +1,15 @@
+<li class="<%= 'active' if @current_path.include?('categories') %>">
+    <a href="#categorySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <%= t ".categories" %>
+    </a>
+    <ul class="collapse list-unstyled <%= 'show' if @current_path.include?('categories') %>" id="categorySubmenu">
+        <li>
+            <% active_class = @current_path.last == 'categories' ? 'text-light bg-secondary' : '' %>
+            <%= link_to t('.view_categories'), admin_categories_path, class: active_class %>
+        </li>
+        <li>
+            <% active_class = @current_path.include?('new') && @current_path.include?('categories') ? 'text-light bg-secondary' : '' %>
+            <%= link_to t('.new_category'), new_admin_category_path, class: active_class %>
+        </li>
+    </ul>
+</li>

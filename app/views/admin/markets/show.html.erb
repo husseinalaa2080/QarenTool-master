@@ -1,0 +1,48 @@
+<%= link_to url_for(admin_markets_path), class: 'text-secondary' do %>
+  <i class="fa fa-2x fa-arrow-circle-<%= is_ar ? 'right' : 'left' %>"></i>
+<% end %>
+<br>
+<br>
+<div class="row align-items-center">
+    <h2 class=""><%= t ".title" %></h2>
+    <%= link_to url_for(edit_admin_market_path(@market)), class: 'col text-secondary' do %>
+        <i class="fa fa-edit"></i>
+    <% end %>
+</div>
+<div class="divider"></div>
+<p>
+  <strong><%= Market.human_attribute_name('active') %>:</strong>
+  <span class="text-<%= @market.active ? 'success' : 'danger' %>">
+    <%= @market.active ? t('.is_active') : t('.inactive') %>
+  </span>
+</p>
+
+<p>
+  <strong><%= Market.human_attribute_name('name') %>:</strong>
+  <%= @market.name %>
+</p>
+
+<p>
+  <strong><%= Market.human_attribute_name('name_en') %>:</strong>
+  <%= @market.name_en %>
+</p>
+
+<p>
+  <strong><%= Market.human_attribute_name('sheet_name') %>:</strong>
+  <%= @market.sheet_name %>
+</p>
+
+<p>
+  <strong><%= Market.human_attribute_name('sheet_url_name') %>:</strong>
+  <%= @market.sheet_url_name %>
+</p>
+
+<p>
+  <strong><%= Market.human_attribute_name('description') %>:</strong>
+  <%= @market.description %>
+</p>
+
+<p>
+  <strong><%= Market.human_attribute_name('logo') %>:</strong>
+  <%= @market.logo %>
+</p>

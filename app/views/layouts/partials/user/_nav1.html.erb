@@ -1,0 +1,42 @@
+<%# Navigation Bar Partial View%>
+<nav id="mainNav" class="navbar navbar-expand-lg navbar-light bg-light fixed-top py-5">
+    <%# Brand %>
+    <%= link_to image_tag('user/logo.png', class: 'logo'), root_path, class: "navbar-brand text-success" %>
+
+    <%# Menu Button (for small screens) %>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <%# Navigation List %>
+    <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
+
+        <%# Language Selection %>
+        <ul class="navbar-nav m<%= is_ar ? 'r' : 'l' %>-auto">
+            <li class="nav-item mx-5">
+                <button type="button" class="btn btn-outline-success cart-btn" data-toggle="modal" data-target="#cart" onclick= "ga('send', 'event', 'Cart', 'CartClick');">
+                    <i class="fas fa-shopping-cart fa-lg pt-2"></i>
+                    <span id="cart_badge">
+                        <%= render 'user/pages/cart/cart_badge', count: @products_count %>
+                    </span>
+                </button>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-language fa-lg text-dark"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-<%= is_ar ? 'left' : 'right' %>" aria-labelledby="navbarDropdown">
+                    <%= link_to 'عربي', url_for(locale: :ar), class: "dropdown-item text-center #{'disabled' if @lang == 'ar'}" %>
+                    <%= link_to 'English', url_for(locale: :en), class: "dropdown-item text-center #{'disabled' if @lang == 'en'}" %>
+                    <%# <div class="dropdown-divider"></div> %>
+                </div>
+            </li>
+        </ul>
+        <%#
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        %>
+    </div>
+</nav>

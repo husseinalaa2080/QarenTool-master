@@ -1,0 +1,405 @@
+# To use the locales, use `I18n.t`:
+#     I18n.t 'hello'
+# In views, this is aliased to just `t`:
+#     <%= t('hello') %>
+# To use a different locale, set it with `I18n.locale`:
+#     I18n.locale = :es
+# This would use the information in config/locales/es.yml.
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+# true, false, on, off, yes, no
+# Instead, surround them with single quotes.
+# en:
+#   'true': 'foo'
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+ar:
+  # Numbers and currencies
+  number:
+    currency:
+      format:
+        unit: 'ريال'
+        delimiter: ','
+        separator: '.'
+        precision: 2
+        format: '%n %u'
+  # Shared (& means can be used as variable)
+  dictionary:
+    app_title: &app_title قارن
+    email: &email البريد الإلكتروني
+    name: &name الأسم
+    password: &password كلمة السر
+    confirmation: &confirmation تأكيد
+    new_market: &new_market متجر جديد
+    new_category: &new_category صنف جديد
+    new_product: &new_product منتج جديد
+    upload_products: &upload_products رفع ملف المنتجات
+    operations: &operations العمليات
+    name: &arabic_name الإسم بالعربي
+    name_en: &english_name الإسم بالانجليزي
+    description: &description الوصف
+    logo: &logo العلامة التجارية
+    active: &status الحالة
+    is_active: &active_status مفعّل
+    inactive: &inactive_status غير مفعّل
+    main_image: &main_image الصورة الرئيسية
+    lowest_price: &lowest_price أرخص الأسعار
+    highest_price: &highest_price أغلى الأسعار
+    sheet_name: &sheet_name الأسم في أعمدة الملف
+    sheet_url_name: &sheet_url_name أسم عامود الرابط في الملف
+    name_in_file: &name_in_file اسم الصنف في الملف
+    all: &all الكل
+    search: &search بحث
+    id: &id الرقم التسلسلي
+    generate_invoice: &generate_invoice إنشاء الإيصال
+    view: &view عرض
+    filter: &filter التصفية
+    confirmation: &confirmation معالجة الطلب
+    is_confirmed: &is_confirmed تم
+    not_confirmed: &not_confirmed لم يتم
+
+
+  views:
+    pagination:
+      first: "&laquo; البداية"
+      last: "النهاية &raquo;"
+      previous: "&lsaquo; السابق"
+      next: "التالي &rsaquo;"
+      truncate: "&hellip;"
+  helpers:
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: "لم نتمكن من ايجاد %{entry_name}"
+          one: "عرض <b>1</b> %{entry_name}"
+          other: "عرض <b>كل %{count}</b> %{entry_name}"
+      more_pages:
+        display_entries: "عرض %{entry_name} <b>%{first}&nbsp;-&nbsp;%{last}</b> من <b>%{total}</b> كمجموع"
+    label:
+      product:
+        category_id: الصنف
+    submit:
+      create: إنشاء %{model}
+      update: تحديث %{model}
+
+
+  # Models and Attributes
+  activerecord:
+    models:
+      market: 
+        one: المتجر
+        other: المتاجر
+      category:
+        one: الصنف
+        other: الأصناف
+      product:
+        one: المنتج
+        other: المنتجات
+      user:
+        one: المستخدم
+        other: المستخدمين
+      order:
+        one: الطلب
+        other: الطلبات
+    attributes:
+      market:
+        name: *arabic_name
+        name_en: *english_name
+        description: *description
+        logo: *logo
+        active: *status
+        sheet_name: *sheet_name
+        sheet_url_name: *sheet_url_name
+      category:
+        icon: الأيقونة
+        name: *arabic_name
+        name_en: *english_name
+        description: *description
+        name_in_file: *name_in_file
+      product:
+        name: *arabic_name
+        name_en: *english_name
+        description: *description
+        main_image: *main_image
+        lowest_price: *lowest_price
+        highest_price: *highest_price
+      user:
+        name: اسم العميل
+        mobile: رقم الهاتف
+        email: البريد الإلكتروني
+        visits_count: عدد الزيارات
+        last_visit: آخر زيارة
+
+
+  # Views
+  layouts:
+    partials:
+      admin:
+        header:
+          logout: خروج
+        sidebar:
+          app_title: *app_title
+          app_title_short: "ق"
+          dashboard: "لوحة التحكم"
+          # Sidebar Links
+        navigation:
+          list:
+            home: الرئيسيّة
+          items:
+            market:
+              markets: المتاجر
+              view_markets: عرض المتاجر
+              new_market: *new_market
+            category:
+              categories: الأصناف
+              view_categories: عرض الأصناف
+              new_category: صنف جديد
+            product:
+              products: المنتجات
+              view_products: عرض المنتجات
+              new_product: منتج جديد
+              upload_products: *upload_products          
+            users:
+              users: المستخدمين
+              view_users: عرض المستخدمين
+            order:
+              orders: الطلبات
+              view_orders: عرض الطلبات
+            settings:
+              settings: الإعدادات
+      user:
+        nav:
+          app_title: *app_title
+
+
+  # Admin Views
+  admin:
+    markets:
+      form:
+        is_active: *active_status
+        inactive: *inactive_status
+      index:
+        actions: *operations
+        new_market: *new_market
+        is_active: *active_status
+        inactive: *inactive_status
+      new:
+        title: *new_market
+      edit:
+        title: تحرير متجر
+      show:
+        title: عرض المتجر
+        is_active: *active_status
+        inactive: *inactive_status
+    categories:
+      index:
+        actions: *operations
+        new_category: *new_category
+      new:
+        title: *new_category
+      edit:
+        title: تحرير الصنف
+      show:
+        title: عرض الصنف
+        icon: الأيقونة
+    products:
+      form:
+        prices: الأسعار
+        url_for: رابط المنتج في %{market}
+      show:
+        title: عرض المنتج
+        prices: الأسعار
+        id: *id
+        not_set: لم يحدد
+      index:
+        actions: *operations
+        new_product: *new_product
+      filter:
+        filter: *filter
+        product_name: اسم المنتج
+        category: الصنف
+        all: *all
+        submit: تحديث
+        clear: إزاله
+      new:
+        title: *new_product
+      edit:
+        title: تحرير منتج
+      new_upload:
+        title: *upload_products
+        upload: رفع الملف
+        choose_file: اختر ملف ...
+    users:
+      index:
+        title: المستخدمين
+        actions: *operations
+        orders_count: عدد الطلبات
+      show:
+        title: عرض المستخدم
+        user_orders: عرض طلبات المستخدم
+      edit:
+        title: تعديل بيانات المستخدم
+    orders:
+      index:
+        all_orders: جميع الطلبات
+        order_number: رقم الطلب
+        confirmed: *confirmation
+        is_confirmed: *is_confirmed
+        not_confirmed: *not_confirmed
+        actions: *operations
+        view: *view
+        generate_invoice: *generate_invoice
+        ordered_at: وقت الطلب
+      filter:
+        filter: *filter
+        all: *all
+        confirmation: *confirmation
+        is_confirmed: *is_confirmed
+        not_confirmed: *not_confirmed
+        customer_phone: رقم هاتف العميل
+        user_id: الرقم التسلسلي
+        submit: تحديث
+        clear: إزاله
+      show:
+        title: عرض الطلب
+        order_info: معلومات الطلب
+        prices_info: معلومات الأسعار
+        user_info: معلومات المستخدم
+        generate_invoice: *generate_invoice
+        view_invoice: عرض الإيصال
+        no_products: لا يوجد منتجات في هذا الطلب
+        delete_order: حذف الطلب
+        delete_confirmation: هل انت متأكد؟
+      order_details:
+        id: *id
+        created_at: وقت إنشاء السلة
+        ordered_at: وقت إنشاء الطلب
+        confirmed_at: وقت إنشاء الوصل
+        confirmed_by: أصدر الوصل من قبل
+        not_confirmed: لم يتم بعد
+        quantity: الكمية
+        order_products: منتجات الطلب
+        order_times: اوقات الطلب
+        image: الصورة
+        total_products: مجموع المنتجات
+        total_quantity: مجموع الكميات
+        no_products: لا يوجد منتجات ، يبدو انه قد تم حذفها
+      prices_details:
+        total: المجموع
+        quantity: عدد المنتجات
+        saving_amount: قيمة التوفير
+        no_products: لا يوجد منتجات
+      user_details:
+        id: *id
+        name: الأسم
+        phone: رقم الهاتف
+        email: *email
+        no_email: لا يوجد
+        order_count: مجموع الطلبات
+        joined_at: وقت التسجيل
+        last_visit: آخر زيارة
+        unknown: غير معروف
+      view_invoice:
+        customer_name: اسم العميل
+        customer_phone: رقم الهاتف
+        customer_email: البريد الإلكتروني
+        order_code: رقم الطلب
+        ordered_at: وقت الطلب
+        price_list: قائمة الأسعار
+        generated_at: تاريخ الطباعه
+        note: ملاحظة
+        note_info: قد تتراوح الأسعار بفارق نسبة بسيطة ﻷعتمادها على المدينة واختلاف الأسعار بين الفروع ، الأسعار أعلاه هي المتوسط من متاجر الرياض
+        rights: جميع الحقوق محفوظة ، منصة قارن
+    settings:
+      index:
+        title: الإعدادات
+        allow_registration: السماح بتسجيل جديد
+        show_lowest_price: إظهار أرخص الأسعار
+        show_saving_percentage: إظهار نسبة التوفير
+        count_visit_every: حساب الزيارة كل
+        hour: ساعة/ساعات
+        update: تحديث
+
+
+  # User Views
+  user:
+    pages:
+      home:
+        email: *email
+        all: *all
+        search: *search
+        no_items: لم يتم العثور على منتجات
+        available_products: المنتجات المتوفرة
+      products:
+        add_to_cart: إضافة الى السلة
+        unit_price: أرخص سعر للحبة
+        saving_percent: نسبة التوفير
+      cart:
+        empty_cart:
+          empty_cart: سلّتك فارغه
+        cart:
+          title: السله
+          checkout: إنشاء تقرير قارن
+          close: أغلاق
+          user_name: إسمك (اختياري)
+          mobile_note: سيتم إرسال التفاصيل على رقمك عن طريق Whatsapp
+          user_phone: "رقم الهاتف (مثال: 05xxxxxxxx)"
+          user_email: البريد الإلكتروني (اختياري)
+  #invoice 
+      user_details:
+        id: *id
+        name: الأسم
+        phone: رقم الهاتف
+        email: *email
+        no_email: لا يوجد
+        order_count: مجموع الطلبات
+        joined_at: وقت التسجيل
+      order_details:
+        id: *id
+        created_at: وقت إنشاء السلة
+        ordered_at: وقت إنشاء الطلب
+        confirmed_at: وقت إنشاء الوصل
+        confirmed_by: أصدر الوصل من قبل
+        not_confirmed: لم يتم بعد
+        quantity: الكمية
+        order_products: منتجات الطلب
+        order_times: اوقات الطلب
+        image: الصورة
+        total_products: مجموع المنتجات
+        total_quantity: مجموع الكميات
+        no_products: لا يوجد منتجات ، يبدو انه قد تم حذفها
+      view_invoice:
+        customer_name: اسم العميل
+        customer_phone: رقم الهاتف
+        customer_email: البريد الإلكتروني
+        order_code: رقم الطلب
+        ordered_at: وقت الطلب
+        price_list: قائمة الأسعار
+        generated_at: تاريخ الطباعه
+        note: ملاحظة
+        note_info: قد تتراوح الأسعار بفارق نسبة بسيطة ﻷعتمادها على المدينة واختلاف الأسعار بين الفروع ، الأسعار أعلاه هي المتوسط من متاجر الرياض
+        rights: جميع الحقوق محفوظة ، منصة قارن
+      prices_details:
+        total: المجموع
+        quantity: عدد المنتجات
+        saving_amount: قيمة التوفير
+        no_products: لا يوجد منتجات
+
+
+
+    
+
+
+
+  # sessions:
+  #   new:
+  #     email: *email
+  #     password: *password
+  errors:
+    invalid_phone: "رقم الهاتف غير صحيح"
+    empty_cart: "سلّتك فارغة"
+    routes:
+      no_match: "لقد قمت بإستخدام رابط غير مدعوم ، لم نستطع الحصول على رابط مشابه"
+  messages:
+    checkedout: "لقد تم إستلام طلبك ، قريباً ستصلك رسالة بالتفاصيل على واتساب برقم الهاتف المدخل"

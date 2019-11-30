@@ -1,0 +1,380 @@
+
+<h2>Main Page</h2>
+<hr>
+
+<div class="row text-center">
+  <div class="col-4">
+    <h5> Total Orders </h5>
+    <h5><%= @total_orders %></h5>
+  </div>
+
+  <div class="col-4">
+    <h5> Completed Orders </h5>
+    <h5><%= @compeleted_orders %></h5>
+  </div>
+
+  <div class="col-4">
+    <h5> Not Completed Orders </h5>
+    <h5><%= @not_compeleted_orders %></h5>
+  </div>
+</div>
+<hr>
+
+<div class="row">
+  <div class="col-6">
+    <%# chartjs_bar_chart @users_orders, @options %>
+    <div class="chartWrapper">
+        <div class="chartAreaWrapper">
+            <div class="chartAreaWrapper2">
+              <canvas id="chart-order-users"></canvas>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="divider"></div>
+
+<div class="row">
+  <div class="col-6">
+    <%# chartjs_bar_chart @users_orders_price, @options %>
+    <div class="chartWrapper">
+      <div class="chartAreaWrapper">
+        <div class="chartAreaWrapper2">
+          <canvas id="chart-order-price"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+
+<div class="row">
+  <div class="col-6">
+    <%# chartjs_bar_chart @most_ordered_products, @options %>
+    <div class="chartWrapper">
+      <div class="chartAreaWrapper">
+        <div class="chartAreaWrapper2">
+          <canvas id="chart-order-most"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="row">
+  <div class="col-8">
+    <div class="chartWrapper">
+      <div class="chartAreaWrapper">
+        <div class="chartAreaWrapper2">
+      <button class="btn btn-outline-success" id="0avg" type="button">يوميا</button>
+      <button class="btn btn-outline-success" id="1avg" type="button">شهريا</button>
+      <button class="btn btn-outline-success" id="2avg" type="button">سنويا</button>
+          <canvas id="chart-order-average"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+<%# chartjs_bar_chart @data_average_daily, @options %>
+<div class="row">
+  <div class="col-8">
+    <div class="chartWrapper">
+      <div class="chartAreaWrapper">
+        <button class="btn btn-outline-success" id="0orderprice" type="button">يوميا</button>
+        <button class="btn btn-outline-success" id="1orderprice" type="button">شهريا</button>
+        <button class="btn btn-outline-success" id="2orderprice" type="button">سنويا</button>
+        <div class="chartAreaWrapper2">
+          <canvas id="canvas5"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="row">
+  <div class="col">
+    <div class="chartWrapper">
+      <div class="chartAreaWrapper">
+        <button class="btn btn-outline-success" id="0" type="button">يوميا</button>
+        <button class="btn btn-outline-success" id="1" type="button">شهريا</button>
+        <button class="btn btn-outline-success" id="2" type="button">سنويا</button>
+        <div class="chartAreaWrapper2">
+          <canvas id="chart-order-number"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+
+<script>
+  //////////////////////////////////////////////////////////////
+  
+$(document).ready(function () {
+
+
+   
+
+ generate_scroll_chart(<%= raw @o_time_daily.to_json %>,"عدد الطلبات يوميا",
+ <%= raw @count_per_day.to_json %>,"#chart-order-number")
+
+      
+  generate_scroll_chart(<%= raw @o_time_daily.to_json %>,"متوسط اسعار الطلبات يوميا",
+  <%= raw @average_order_daily.to_json %>,"#chart-order-average")
+
+
+  generate_scroll_chart(<%= raw @popular_products_name.to_json %>,"اكثر المنتجات المطلوبة",
+  <%= raw @popular_products_quantity.to_json %>,"#chart-order-most")
+
+    generate_scroll_chart(<%= raw @users_count.to_json %>,"اعداد طلبات المستخدمين",
+  <%= raw @orders_count.to_json %>,"#chart-order-users")
+
+
+    generate_scroll_chart(<%= raw @users_count.to_json %>,"اسعار طلبات المستخدمين",
+  <%= raw @sum_price.to_json %>,"#chart-order-price")
+
+
+
+  stacked_chart (<%= raw @o_time_daily.to_json %> ,
+  <%=  raw @min_order_daily.to_json %>,'اقل سعر' , 
+  <%=  raw @min_order_daily.to_json %>,'متوسط سعر' ,
+  <%=  raw @max_order_daily.to_json %>,'اعلي سعر' ,
+  'متوسط اسعار الطلبات') 
+
+});
+
+ function addData(numData, chart) {
+        for (var i = 0; i < numData; i++) {
+            chart.data.datasets[0].data.push(Math.random() * 100);
+            chart.data.labels.push("Label" + i);
+            var newwidth = $('.chartAreaWrapper2').width() + 60;
+            $('.chartAreaWrapper2').width(newwidth);
+        }
+    }
+
+
+  function generate_scroll_chart(labels,label_name,data_set,chart_id){
+
+   console.log(labels)
+    var chartData = {
+        labels: labels,
+
+      datasets: [{
+        label: label_name,
+        backgroundColor: "rgb(4,115,4)",
+        borderColor: "rgb(4,115,4)",
+        data: data_set
+      }]
+    };
+
+      
+
+
+
+        var rectangleSet = false;
+
+        var canvasTest = $(chart_id);
+        var chartTest = new Chart(canvasTest, {
+            type: 'bar',
+            data: chartData,
+            maintainAspectRatio: false,
+            responsive: true,
+            options: {
+                tooltips: {
+                    titleFontSize: 0,
+                    titleMarginBottom: 0,
+                    bodyFontSize: 12
+                },
+                legend: {
+                    display: true
+                },
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            fontSize: 12,
+                            display: true
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            fontSize: 12,
+                            beginAtZero: true
+                        }
+                    }]
+                },
+            
+            }
+        });
+        addData(1, chartTest);
+
+  }
+
+
+  $("#0orderprice").on("click", function () {
+
+    stacked_chart (<%= raw @o_time_daily.to_json %> ,
+    <%=  raw @min_order_daily.to_json %>,'اقل سعر' , 
+    <%=  raw @min_order_daily.to_json %>,'متوسط سعر' ,
+    <%=  raw @max_order_daily.to_json %>,'اعلي سعر' ,
+    'متوسط اسعار الطلبات') 
+  
+  });
+  
+  
+  $("#1orderprice").on("click", function () {
+
+    stacked_chart (<%= raw @o_time_monthly.to_json %> ,
+    <%=  raw @min_order_monthly.to_json %>,'اقل سعر' , 
+    <%=  raw @min_order_monthly.to_json %>,'متوسط سعر' ,
+    <%=  raw @max_order_monthly.to_json %>,'اعلي سعر' ,
+    'متوسط اسعار الطلبات') 
+  
+  });
+
+
+  $("#2orderprice").on("click", function () {
+
+    stacked_chart (<%= raw @o_time_yearly.to_json %> ,
+    <%=  raw @min_order_yearly.to_json %>,'اقل سعر' , 
+    <%=  raw @min_order_yearly.to_json %>,'متوسط سعر' ,
+    <%=  raw @max_order_yearly.to_json %>,'اعلي سعر' ,
+    'متوسط اسعار الطلبات') 
+  
+  });
+
+  $("#0").on("click", function () {
+
+    generate_scroll_chart(<%= raw @o_time_daily.to_json %>,"عدد الطلبات يوميا",<%= raw @count_per_day.to_json %>,"#chart-order-number")
+
+  });
+
+
+  //montly
+  $("#1").on("click", function () {
+
+        generate_scroll_chart(<%= raw @o_time_monthly.to_json %>,"عدد الطلبات شهريا",<%= raw @count_per_month.to_json %>,"#chart-order-number")
+
+  });
+
+
+  //yearly
+  $("#2").on("click", function () {
+      
+      generate_scroll_chart(<%= raw @o_time_yearly.to_json %>,"عدد الطلبات سنويا",<%= raw @count_per_year.to_json %>,"#chart-order-number")
+  });
+
+
+  //////////////   average order price     ////////////////
+
+
+
+  // daily
+  $("#0avg").on("click", function () {
+
+
+        generate_scroll_chart(<%= raw @o_time_daily.to_json %>,"متوسط اسعار الطلبات يوميا",<%= raw @average_order_daily.to_json %>,"#chart-order-average")
+
+  });
+
+
+  //montly
+  $("#1avg").on("click", function () {
+
+
+            generate_scroll_chart(<%= raw @o_time_monthly.to_json %>,"متوسط اسعار الطلبات شهريا",<%= raw @average_order_monthly.to_json %>,"#chart-order-average")
+
+  
+  });
+
+
+  //yearly
+  $("#2avg").on("click", function () {
+
+generate_scroll_chart(<%= raw @o_time_yearly.to_json %>,"متوسط اسعار الطلبات سنويا",<%= raw @average_order_yearly.to_json %>,"#chart-order-average")
+
+    
+  });
+  ////////////////////////////stacked //////////////////////////////
+
+ 
+
+function stacked_chart (labels , dataset1,label1 , dataset2,label2 , dataset3,label3 ,text_legend) {
+
+
+  var barChartData = {
+    labels: labels,
+    datasets: [{
+      label: label1,
+      backgroundColor: "red",
+      data: dataset1
+  
+    }, {
+      label: label2,
+      backgroundColor: "blue",
+      data:  dataset2
+  
+    }, {
+      label: label3,
+      backgroundColor: "green",
+      data:  dataset3
+    }]
+  
+  };
+
+  if (  document.getElementById('canvas5') != null )
+
+  {
+   // document.getElementById('canvas5').remove();
+
+  }
+  console.log(document.getElementById('canvas5'));
+  var ctx = document.getElementById('canvas5').getContext('2d');
+
+  window.myBar = new Chart(ctx, {
+    type: 'bar',
+    data: barChartData,
+    options: {
+      title: {
+        display: true,
+        text: text_legend
+      },
+      tooltips: {
+        mode: 'index',
+        intersect: false
+      },
+      responsive: true,
+      scales: {
+        xAxes: [{
+          stacked: true,
+        }],
+        yAxes: [{
+          stacked: true
+        }]
+      }
+    }
+  });
+}; 
+
+
+  ///////////////////////////////////////////////////////
+</script>

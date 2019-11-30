@@ -1,0 +1,77 @@
+<%= wicked_pdf_stylesheet_link_tag "invoice", media: "print" %>
+
+<% align_text = is_ar ? 'right' : 'left' %>
+<style>
+    body{
+    font-family: <%= is_ar ? "Tajawal, sans-serif;" : "Ubuntu, sans-serif;" %>
+    }
+</style>
+
+<div class="invoice-wrapper ">
+    <div class="main">
+        <div class="header">
+            <div class="row text-center">
+                <div class="col">
+                    <%= wicked_pdf_image_tag 'user/logo.png' %>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-5 d-flex align-items-end justify-content-center">
+                    <ul class="list-unstyled no-padding no-margin full-width">
+                       <% if @order.user.name.present? %>
+                        <li class="row">
+                            <strong class="col-md-4"><%= t ".customer_name" %>:</strong>
+                            <span class="col text-<%= align_text %>"><%= @order.user.name %></span>
+                        </li>
+                        <% end %>                        
+                        <li class="row">
+                            <strong class="col-md-4"><%= t ".order_code" %>:</strong>
+                            <span class="col text-<%= align_text %>" ><%= "#{@order.created_at.year}#{@order.id}" %></span>
+                        </li>
+                        <li class="row">
+                            <strong class="col-md-4"><%= t ".ordered_at" %>:</strong>
+                            <span class="col text-<%= align_text %>"><%= format_date @order.created_at %></span>
+                        </li>
+                    </ul>
+                </div>
+<!--            <div class="col"></div>
+                <div class="col-md-4 d-flex align-items-start justify-content-center">
+                    <ul class="list-unstyled no-padding no-margin full-width">
+                        <li class="row">
+                            <strong class="col-md-4"><%= t ".generated_at" %>:</strong>
+                            <span class="col text<%= align_text %>"><%= format_date @order.confirmed_at %></span>
+                        </li>
+                    </ul>
+                </div> -->
+            </div> 
+        </div>
+        <div class="body my-5 py-5">
+            <h4 class="text-<%= align_text %>"><%= t ".price_list" %></h4>
+            <%= render partial: 'prices_details' %>
+            <div class="my-5"></div>
+            <div class="panel panel-default">
+                <div class="panel-body text-secondary pt-5 text-center">
+                    <strong><%= t ".note" %></strong>: <%= t ".note_info" %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer text-center">
+        <ul dir="ltr" class="list-unstyled d-flex align-items-center justify-content-center">
+            <li>
+                <%= link_to "tel:#{+966503496466}", class: 'text-info px-3' do %>
+                    <%= wicked_pdf_image_tag 'user/whatsappLogo.png' %> +966 50 349 6466
+                    <!-- <i class="fab fa-whatsapp"></i> +966 50 349 6466 --> 
+                <% end %>
+            </li>
+            <li>
+                <%= link_to "https://twitter.com/Qaren_sa", class: 'text-info px-3' do %>
+                    <%= wicked_pdf_image_tag 'user/twitter.png' %> Qaren_sa
+                    <!-- <i class="fab fa-twitter"></i> Qaren_sa -->
+                <% end %>
+            </li>
+        </ul>
+        <p class="text-secondary">&copy; <%= "#{Time.new.year} #{t ".rights"}" %></p>
+    </div>
+</div>

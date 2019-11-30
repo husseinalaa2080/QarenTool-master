@@ -1,0 +1,47 @@
+<div class="accordion mb-5" id="accordionExample">
+    <div class="card">
+        <div class="card-header pointer" id="headingOne" data-toggle="collapse" data-target="#filter" aria-expanded="true" aria-controls="filter">
+            <h5 class="mb-0">
+                <%= t ".filter" %>
+            </h5>
+        </div>
+        <div id="filter" class="collapse <%= 'show' if params[:filtering] %>" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+                <%= form_with model: @filter, url_fo: admin_orders_path, local: true, method: :get, id: 'filter-form' do |f| %>
+                    <%= f.hidden_field :filtering %>
+                    <div class="fomr-group row my-3">
+                        <div class="col-md-6 row">
+                            <%= f.label t(".product_name"), for: "product_name", class: 'col-md-4' %>
+                            <%= f.text_field :product_name, class: 'form-control col-md-8', value: params[:product_name] ? params[:product_name] : '' %>
+                        </div>
+                    </div>
+                    <div class="fomr-group row my-3">
+                        <div class="col-md-6 row">
+                            <%= f.label t(".category"), class: 'col-md-4', for: 'confirmation' %>
+                            <%= f.collection_select(
+                                    :category_id,
+                                    Category.all.order(:id), :id, :lang_name,
+                                    { selected: params[:category_id], include_blank: t(".all") },
+                                    { style: 'width: 200px' }
+                                )
+                            %>
+                        </div>
+                    </div>
+                    <div class="form-group mt-5 text-center">
+                        <%= f.submit t(".submit"), class: 'btn btn-outline-info' %>
+                        <div class="gap-x-sm"></div>
+                        <%= link_to t(".clear"), admin_products_path, class: 'btn btn-outline-danger' %>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function() {
+        $('select').select2();
+    });
+</script>

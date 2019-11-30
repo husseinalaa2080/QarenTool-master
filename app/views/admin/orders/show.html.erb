@@ -1,0 +1,44 @@
+<%= link_to url_for(admin_orders_path), class: 'text-secondary' do %>
+  <i class="fa fa-2x fa-arrow-circle-<%= is_ar ? 'right' : 'left' %>"></i>
+<% end %>
+<br>
+<br>
+<div class="row align-items-center">
+    <h2 class=""><%= t ".title" %></h2>
+</div>
+<br>
+
+<h4 class="mt-5"><%= t ".order_info" %></h4>
+<div class="divider"></div>
+<%= render partial: 'order_details' %>
+<div class="divider"></div>
+
+<h4 class="mt-5"><%= t ".prices_info" %></h4>
+<div class="divider"></div>
+<%= render partial: 'prices_details' %>
+<div class="divider"></div>
+<% if @order.order_products.size == 0 %>
+  <div class="text-center">
+    <p class="text-secondary"><%= t ".no_products" %></p>
+    <%= link_to t(".delete_order"), admin_destroy_order_path(@order), method: :delete, class: "btn btn-outline-danger", data: { confirm: t(".delete_confirmation") } %>
+  </div>
+<% elsif @order.checkout_at %>
+  <% if !@order.confirmed %>
+    <div class="text-center">
+      <%= link_to t(".generate_invoice"), admin_generate_invoice_path(@order, admin: current_admin), class: 'btn btn-info', method: :post %>
+    </div>
+  <% else %>
+    <div class="text-center">
+      <%= link_to t(".view_invoice"), admin_invoice_path(@order), class: 'btn btn-success' %>
+    </div>
+  <% end %>
+  <br><br>
+<% end %>
+
+<% if @order.user %>
+  <h4 class="mt-5"><%= t ".user_info" %></h4>
+  <div class="divider"></div>
+  <%= render partial: 'user_details' %>
+<% end %>
+
+

@@ -1,0 +1,106 @@
+<div class="row">
+    <div class="col">
+        <h5><%= t ".order_products" %></h5>
+        <br>
+        <table class="table table-hover text-center">
+            <thead class="thead-light">
+                <th>#</th>
+                <th><%= t ".image" %></th>
+                <th><%= Product.human_attribute_name("name#{is_ar ? '' : '_en'}") %></th>
+                <th><%= t ".quantity" %></th>
+            </thead>
+            <tbody>
+                <% if @order_products.size == 0 %>
+                    <tr>
+                        <td colspan="4" class="text-danger">
+                            <%= t ".no_products" %>
+                        </td>
+                    </tr>
+                <% end %>
+                <% @order_products.each_with_index do |item, i| %>
+                    <% product = item.product %>
+                        <tr>
+                            <td>
+                                <%= i + 1 %>
+                            </td>
+                            <td>
+                                <%= image_tag product.main_image, class: 'product-image' if product.main_image && !product.main_image.empty? %>
+                            </td>
+                            <td>
+                                <%= link_to product.lang_name, admin_product_path(product) %>
+                            </td>
+                            <td>
+                                <p><%= item.quantity %></p>
+                            </td>
+                        </tr>
+                <% end %>
+            </tbody>
+            <tfoot class="tfoot-dark">
+                <tr>
+                    <td>
+                        <%= t ".total_products" %>
+                    </td>
+                    <td>
+                        <%= @counts[:product_count] %>
+                    </td>
+                    <td>
+                        <%= t ".total_quantity" %>
+                    </td>
+                    <td>
+                        <%= @counts[:quantity_count] %>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="gap-x-sm"></div>
+    <div class="col">
+        <h5><%= t ".order_times" %></h5>
+        <br>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item list-group-item-action d-flex">
+                <strong style="min-width: 200px;"><%= t ".id"%>:</strong>
+                <div class="gap-x-sm"></div>
+                <span class="text-center">
+                    <%= @order.id %>
+                </span>
+            </li>
+            <li class="list-group-item list-group-item-action d-flex">
+                <strong style="min-width: 200px;"><%= t ".created_at"%>:</strong>
+                <div class="gap-x-sm"></div>
+                <span class="text-center">
+                    <%= format_date @order.created_at %>
+                </span>
+            </li>
+            <li class="list-group-item list-group-item-action d-flex">
+                <strong style="min-width: 200px;"><%= t ".ordered_at"%>:</strong>
+                <div class="gap-x-sm"></div>
+                <span class="text-center">
+                    <%= format_date @order.checkout_at if @order.checkout_at %>
+                </span>
+            </li>
+            <li class="list-group-item list-group-item-action d-flex">
+                <strong style="min-width: 200px;"><%= t ".confirmed_at"%>:</strong>
+                <div class="gap-x-sm"></div>
+                <% if @order.confirmed %>
+                    <span class="text-center text-success">
+                        <%= format_date(@order.created_at) %>
+                    </span>
+                <% else %>
+                    <span class="text-center text-danger">
+                        <%= t(".not_confirmed") %>
+                    </span>
+                <% end %>
+            </li>
+            <% if @order.admin %>
+                <li class="list-group-item list-group-item-action d-flex">
+                    <strong style="min-width: 200px;"><%= t ".confirmed_by"%>:</strong>
+                    <div class="gap-x-sm"></div>
+                    <span class="text-center text-info">
+                        <%= @order.admin.email %>
+                    </span>
+                </li>
+            <% end %>
+        </ul>
+    </div>
+</div>

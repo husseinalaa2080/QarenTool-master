@@ -1,0 +1,20 @@
+<ul class="list-unstyled components">
+    <%# Home Link %>
+    <li class="<%= 'active' if @current_path.last == 'admin' %>">
+        <%= link_to t('.home'), admin_path %>
+    </li>
+    <%# Markets %>
+    <%= render partial: 'layouts/partials/admin/navigation/items/market' %>
+    <%# Categories %>
+    <%= render partial: 'layouts/partials/admin/navigation/items/category' %>
+    <%# Products %>
+    <%= render partial: 'layouts/partials/admin/navigation/items/product' %>
+    <%# Users %>
+    <%= render partial: 'layouts/partials/admin/navigation/items/users' %>
+    <%# Orders %>
+    <%= render partial: 'layouts/partials/admin/navigation/items/order' %>
+    <%# Settings %>
+    <% if current_admin.super_admin %>
+        <%= render partial: 'layouts/partials/admin/navigation/items/settings' %>
+    <% end %>
+</ul>

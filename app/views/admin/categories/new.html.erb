@@ -1,0 +1,8 @@
+<%= link_to url_for(admin_categories_path), class: 'text-secondary' do %>
+    <i class="fa fa-2x fa-arrow-circle-<%= is_ar ? 'right' : 'left' %>"></i>
+<% end %>
+<br>
+<br>
+<h2><%= t ".title" %></h2>
+<div class="divider"></div>
+<%= render 'form', category: @category, edit: false %>

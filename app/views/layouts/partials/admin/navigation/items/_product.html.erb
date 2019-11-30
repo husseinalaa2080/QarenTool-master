@@ -1,0 +1,19 @@
+<li class="<%= 'active' if @current_path.include?('products') %>">
+    <a href="#productSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <%= t ".products" %>
+    </a>
+    <ul class="collapse list-unstyled <%= 'show' if @current_path.include?('products') %>" id="productSubmenu">
+        <li>
+            <% active_class = @current_path.last == 'products' ? 'text-light bg-secondary' : '' %>
+            <%= link_to t('.view_products'), admin_products_path, class: active_class %>
+        </li>
+        <li>
+            <% active_class = @current_path.include?('new') && @current_path.include?('products') ? 'text-light bg-secondary' : '' %>
+            <%= link_to t('.new_product'), new_admin_product_path, class: active_class %>
+        </li>
+        <li>
+            <% active_class = @current_path.include?('new_upload') && @current_path.include?('products') ? 'text-light bg-secondary' : '' %>
+            <%= link_to t('.upload_products'), admin_new_upload_path, class: active_class %>
+        </li>
+    </ul>
+</li>

@@ -1,0 +1,11 @@
+<li class="<%= 'active' if @current_path.include?('users') %>">
+    <a href="#userSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <%= t ".users" %>
+    </a>
+    <ul class="collapse list-unstyled <%= 'show' if @current_path.include?('users') %>" id="userSubmenu">
+        <li>
+            <% active_class = @current_path.last == 'users' ? 'text-light bg-secondary' : '' %>
+            <%= link_to t('.view_users'), admin_users_path, class: active_class %>
+        </li>
+    </ul>
+</li>

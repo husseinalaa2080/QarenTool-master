@@ -1,0 +1,41 @@
+<% user = @order.user %>
+<div class="row mb-5 pb-5">
+    <ul class="list-group list-group-flush col-md-4">
+        <li class="list-group-item list-group-item-action d-flex">
+            <strong style="min-width: 200px;"><%= t ".id"%>:</strong>
+            <span class="text-center">
+                <%= user.id %>
+            </span>
+        </li>
+        <li class="list-group-item list-group-item-action d-flex">
+            <strong style="min-width: 200px;"><%= t ".name"%>:</strong>
+            <span class="text-center">
+                <%= link_to user.name, admin_user_path(user) %>
+            </span>
+        </li>
+        <li class="list-group-item list-group-item-action d-flex">
+            <strong style="min-width: 200px;"><%= t ".phone"%>:</strong>
+            <span class="text-center">
+                <%= user.mobile %>
+            </span>
+        </li>
+        <li class="list-group-item list-group-item-action d-flex">
+            <strong style="min-width: 200px;"><%= t ".email"%>:</strong>
+            <span class="text-center">
+                <%= user.email != '' ? user.email : t(".no_email") %>
+            </span>
+        </li>
+        <li class="list-group-item list-group-item-action d-flex">
+            <strong style="min-width: 200px;"><%= t ".order_count"%>:</strong>
+            <span class="text-center">
+                <%= user.orders.size %>
+            </span>
+        </li>
+        <li class="list-group-item list-group-item-action d-flex">
+            <strong style="min-width: 200px;"><%= t ".joined_at"%>:</strong>
+            <span class="text-center">
+                <%= format_date user.created_at %>
+            </span>
+        </li>
+    </ul>
+</div>

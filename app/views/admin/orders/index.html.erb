@@ -1,0 +1,75 @@
+<h2><%= t ".all_orders" %></h2>
+<div class="divider"></div>
+<br>
+<br>
+
+<%= render partial: 'filter' %>
+
+
+<table class="table table-hover text-center mb-5 pb-5">
+  <thead class="thead-light">
+    <tr>
+      <th># ID</th>
+      <th><%= t ".order_number" %></th>
+      <th><%= User.model_name.human %></th>
+      <th><%= t ".confirmed" %></th>
+      <th><%= t ".ordered_at" %></th>
+      <th colspan="3" class="text-info"><%= t ".actions" %></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.id %></td>
+        <td><%= "#{order.created_at.year}#{order.id}" %></td>
+        <td>
+          <% if order.user %>
+            <%= order.user.name %><br><%= order.user.mobile %>
+          <% end %>
+        </td>
+        <td>
+          <% if order.confirmed %>
+            <span class="text-success"><%= t ".is_confirmed" %></span>
+            <br>
+            <%= format_date order.confirmed_at %>
+          <% else %>
+            <span class="text-danger"><%= t ".not_confirmed" %></span>
+          <% end %>
+        </td>
+        <td>
+          <%= format_date order.created_at %>
+        </td>
+        <td>
+          <%= link_to url_for(admin_order_path(order)), class: 'btn btn-outline-info btn-sm pt-2', title: t(".view") do %>
+            <i class="fa fa-eye"></i>
+          <% end %>
+          <% if !order.confirmed %>
+            <%= link_to(url_for(admin_generate_invoice_path(order, admin: current_admin)),
+                        class: 'btn btn-outline-success btn-sm pt-2',
+                        method: :post,
+                        title: t(".generate_invoice")
+                ) do
+            %>
+              <i class="fas fa-file-invoice-dollar fa-lg"></i>
+            <% end %>
+          <% else %>
+            
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<div class="row my-2 mx-auto pagination">
+    <%= paginate @orders %>
+</div>
+
+
+<script>
+  $(document).ready(function() {
+      $('select').select2();
+  });
+</script>

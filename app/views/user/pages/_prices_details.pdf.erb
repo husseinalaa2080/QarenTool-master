@@ -1,0 +1,84 @@
+<%
+    totals = {}
+    total_quantity = 0
+%>
+<div>
+    <table class="table table-hover text-center">
+        <thead>
+            <th class="bg-light"><%= Product.model_name.human %></th>
+            <th><%= t ".quantity" %></th>
+            <% @markets.each do |market| %>
+                <th>
+                    <%= market.lang_name %>
+                </th>
+            <% end %>
+        </thead>
+        <tbody>
+            <% if @order_products.size == 0 %>
+                <tr>
+                    <td colspan="4" class="text-danger">
+                        <%= t ".no_products" %>
+                    </td>
+                </tr>
+            <% end %>
+            <% @order_products.each do |item| %>
+                <% product = item.product %>
+                <% quantity = item.quantity %>
+                <tr>
+                    <td class="bg-light" style="max-width: 150px">
+                        <%= product.lang_name %>
+                    </td>
+                    <td>
+                        <% total_quantity += quantity %>
+                        <%= quantity %>
+                    </td>
+                    <% product.informations.order_by_market_name.each do |item_price| %>
+                        <td>
+                            <% price = item_price.price.to_f * quantity %>
+                            <% totals[item_price.market_id] = totals[item_price.market_id] ? totals[item_price.market_id] + price : price %>
+                            <%= number_to_currency price, locale: @lang %>
+                        </td>
+                    <% end %>
+                </tr>
+            <% end %>
+        </tbody>
+        <tfoot class="tfoot-dark">
+            <tr>
+                <td><%= t ".total" %></td>
+
+                <td><%= totals['quantity'] %></td>
+                
+                <%
+                    min = totals.min_by{ |k,v| v }
+                    max = totals.max_by{ |k,v| v }
+                %>
+
+                <% @markets.each do |market| %>
+                    <% if min.last && totals[market.id] == min.last %>
+                        <td class="text-success">
+                            <%= number_to_currency totals[market.id], locale: @lang %>
+                        </td>
+                    <% elsif max.last && totals[market.id] == max.last %>
+                        <td class="text-danger">
+                            <%= number_to_currency totals[market.id], locale: @lang %>
+                        </td>
+                    <% else %>
+                        <td>
+                            <%= number_to_currency totals[market.id], locale: @lang %>
+                        </td>
+                    <% end %>
+                <% end %>
+            </tr>
+        </tfoot>
+    </table>
+    <br><br>
+    <div class="row third-width">
+        <% text_align = is_ar ? 'right' : 'left' %>
+        <div class="col-md-5 text-<%= text_align %>">
+            <strong><%= t ".saving_amount" %>:</strong>
+        </div>
+        <div class="col text-success text-<%= text_align %>">
+            <%= number_to_currency (max.last - min.last).round(2), locale: @lang %>
+        </div>
+    </div>
+</div>

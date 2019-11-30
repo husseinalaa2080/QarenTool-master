@@ -1,0 +1,39 @@
+<div class="accordion mb-5" id="accordionExample">
+    <div class="card">
+        <div class="card-header pointer" id="headingOne" data-toggle="collapse" data-target="#filter" aria-expanded="true" aria-controls="filter">
+            <h5 class="mb-0">
+                <%= t ".filter" %>
+            </h5>
+        </div>
+        <div id="filter" class="collapse <%= 'show' if params[:filtering] %>" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+                <%= form_with model: @filter, url_fo: admin_orders_path, local: true, method: :get, id: 'filter-form' do |f| %>
+                    <%= f.hidden_field :filtering %>
+                    <div class="fomr-group row my-3">
+                        <div class="col-md-6 row">
+                            <%= f.label t(".user_id"), for: "user_id", class: 'col-md-4' %>
+                            <%= f.text_field :user_id, class: 'form-control col-md-8', value: params[:user_id] ? params[:user_id] : '' %>
+                        </div>
+                    </div>
+                    <div class="fomr-group row my-3">
+                        <div class="col-md-6 row">
+                            <%= f.label t(".customer_phone"), for: "customer_phone", class: 'col-md-4' %>
+                            <%= f.text_field :customer_phone, class: 'form-control col-md-8', value: params[:customer_phone] ? params[:customer_phone] : '' %>
+                        </div>
+                    </div>
+                    <div class="fomr-group row my-3">
+                        <div class="col-md-6 row">
+                            <%= f.label t(".confirmation"), class: 'col-md-4', for: 'confirmation' %>
+                            <%= f.select :confirmation, options_for_select([[t(".all"), 0], [t(".is_confirmed"), 1], [t(".not_confirmed"), 2]], params[:confirmation]), {}, {class: 'form-control', :style => 'width: 200px'} %>
+                        </div>
+                    </div>
+                    <div class="form-group mt-5 text-center">
+                        <%= f.submit t(".submit"), class: 'btn btn-outline-info' %>
+                        <div class="gap-x-sm"></div>
+                        <%= link_to t(".clear"), admin_orders_path, class: 'btn btn-outline-danger' %>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>

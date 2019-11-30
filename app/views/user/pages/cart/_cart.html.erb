@@ -1,0 +1,38 @@
+<div class="modal fade" id="cart" tabindex="-1" role="dialog" aria-labelledby="cart-title" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold" id="cart-title"><%= t ".title" %></h5>
+                <button type="button"
+                        class="close"
+                        style="margin: 0; margin-<%= is_ar ? 'right' : 'left' %>: auto"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                        onclick= "ga('send', 'event', 'Cart', 'CartClose');">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body cart_list">
+                <%= render 'user/pages/cart/list', cart_items: @cart.order_products %>
+            </div>
+            <div class="modal-footer">
+                <%= form_with url: checkout_path, local: true, class: 'full-width' do |f| %>
+                    <div class="d-flex flex-column justify-content-between">
+                        <div class="form-group mb-1">
+                            <%= f.text_field :user_name, class: 'form-control mb-2 text-center', placeholder: t('.user_name')%>
+                        </div>
+ <!--                        <div class="form-group mb-1">
+                            <h6><small class="text-muted "><%= t ".mobile_note" %></small></h6>
+                            <%= f.text_field :user_phone, class: 'form-control mb-2 text-center', placeholder: t('.user_phone'), required: true %>
+                        </div>
+                        <div class="form-group mb-1">
+                            <%= f.text_field :user_email, class: 'form-control mb-2 text-center', placeholder: t('.user_email') %>
+                        </div> -->
+                        <%= f.submit t(".checkout"), class: "btn btn-success"  %>
+                        <%# <button type="button" class="btn btn-outline-danger" data-dismiss="modal"><%= t ".close" ></button> %>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>

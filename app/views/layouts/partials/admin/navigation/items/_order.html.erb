@@ -1,0 +1,11 @@
+<li class="<%= 'active' if @current_path.include?('orders') %>">
+    <a href="#orderSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <%= t ".orders" %>
+    </a>
+    <ul class="collapse list-unstyled <%= 'show' if @current_path.include?('orders') ||  @current_path.include?('invoice') %>" id="orderSubmenu">
+        <li>
+            <% active_class = @current_path.last == 'orders' ? 'text-light bg-secondary' : '' %>
+            <%= link_to t('.view_orders'), admin_orders_path, class: active_class %>
+        </li>
+    </ul>
+</li>

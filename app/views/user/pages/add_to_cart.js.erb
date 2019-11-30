@@ -1,0 +1,3 @@
+$(".cart_list").html(`<%= render 'user/pages/cart/list', cart_items: @cart.order_products %>`);
+$("#cart_badge").html('<%= render 'user/pages/cart/cart_badge', count: @products_count %>');
+$("#empty_cart").remove();
